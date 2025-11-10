@@ -1,3 +1,5 @@
-﻿  main.cpp
+﻿  agent.cpp
+  main.cpp
+  Generating Code...
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GameAIprogrammin_001.vcxproj -> C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\x64\Debug\GameAIprogrammin_001.exe
