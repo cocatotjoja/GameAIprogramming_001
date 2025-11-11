@@ -1,34 +1,133 @@
 #include "agent.h"
-#include "raylib.h"
 
-void Agent::Update(Vector2 target)
+
+void Agent::CheckState()
 {
+	if (IsKeyDown(KEY_ONE))
+	{
+		// Seek
+		state = 1;
+	}
+	if (IsKeyDown(KEY_TWO))
+	{
+		// Flee
+		state = 2;
+	}
+	if (IsKeyDown(KEY_THREE))
+	{
+		// Pursue
+		state = 3;
+	}
+	if (IsKeyDown(KEY_FOUR))
+	{
+		// Evade
+		state = 4;
+	}
+	if (IsKeyDown(KEY_FIVE))
+	{
+		// Arrive
+		state = 5;
+	}
+	if (IsKeyDown(KEY_SIX))
+	{
+		// Wander
+		state = 6;
+	}
+}
+
+void Agent::Update(Vector2 targetPos, Vector2 targetVel)
+{
+	// Update Velocity
 	switch (state)
 	{
 		case 1:
-			Seek(target);
+			velocity += Seek(targetPos) * GetFrameTime();
 			break;
 		case 2:
-			Flee(target);
+			velocity += Flee(targetPos) * GetFrameTime();
 			break;
 		case 3:
-			Pursue(target);
+			velocity += Pursue(targetPos, targetVel) * GetFrameTime();
 			break;
 		case 4:
-			Evade(target);
+			velocity += Evade(targetPos, targetVel) * GetFrameTime();
 			break;
 		case 5:
-			Arrive(target);
+			velocity += Arrive(targetPos) * GetFrameTime();
 			break;
 		case 6:
-			Wander(target);
+			velocity += Wander(targetPos) * GetFrameTime();
 			break;
 		default:
 			break;
 	}
+	if (Vector2Length(velocity) > maxSpeed)
+	{
+		velocity = Vector2Normalize(velocity);
+		velocity *= maxSpeed;
+	}
+
+	// Update position
+	position += velocity * GetFrameTime();
 }
 
 void Agent::Draw(Color color)
 {
+	DrawCircle(position.x, position.y, 20, color);
+	DrawCircle(chase.x, chase.y, 5, color);
+}
 
+Vector2 Agent::Seek(Vector2 targetPos)
+{
+	// Update chase (DEBUG)
+	chase = targetPos;
+
+	// Calculate velocity
+	Vector2 result = targetPos - position;
+	return result;
+}
+
+Vector2 Agent::Flee(Vector2 targetPos)
+{
+	// Update chase (DEBUG)
+	chase = targetPos;
+
+	// Calculate velocity
+	Vector2 result = position - targetPos;
+	return result;
+}
+
+Vector2 Agent::Pursue(Vector2 targetPos, Vector2 targetVel)
+{
+	float maxTime = 480 * 100;
+	float distance = Vector2Distance(targetPos, position);
+	float time = distance / Vector2Length(velocity);
+	
+	// TEST
+	time *= 4; 
+	if (time > maxTime)
+	{
+		time = maxTime;
+	}
+	Vector2 target = targetPos + (targetVel * time);
+	
+	// Update chase (DEBUG)
+	chase = target;
+
+	return Seek(target);
+}
+
+Vector2 Agent::Evade(Vector2 targetPos, Vector2 targetVel)
+{
+	return Vector2();
+}
+
+Vector2 Agent::Arrive(Vector2 targetPos)
+{
+	return Vector2();
+}
+
+Vector2 Agent::Wander(Vector2 targetPos)
+{
+	return Vector2();
 }

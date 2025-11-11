@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|solutionrelative:agent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|solutionrelative:agent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|solutionrelative:player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|solutionrelative:agent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -21,6 +17,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|solutionrelative:player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{28B59ABF-3BA8-42F6-8C21-D73F77796E6D}|GameAIprogrammin_001.vcxproj|solutionrelative:player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,69 +30,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "agent.cpp",
               "DocumentMoniker": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.cpp",
               "RelativeDocumentMoniker": "agent.cpp",
               "ToolTip": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.cpp",
               "RelativeToolTip": "agent.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAAAGoAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-10T12:10:47.859Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "agent.h",
               "DocumentMoniker": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.h",
               "RelativeDocumentMoniker": "agent.h",
               "ToolTip": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\agent.h",
               "RelativeToolTip": "agent.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAACJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-11-10T12:04:27.445Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "player.cpp",
               "DocumentMoniker": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.cpp",
               "RelativeDocumentMoniker": "player.cpp",
               "ToolTip": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.cpp",
               "RelativeToolTip": "player.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-10T11:49:01.439Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "player.h",
               "DocumentMoniker": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.h",
               "RelativeDocumentMoniker": "player.h",
               "ToolTip": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\player.h",
               "RelativeToolTip": "player.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-11-10T11:21:28.662Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\larcat-4-local\\Documents\\GitHub\\GameAIprogramming_001\\GameAIprogrammin_001\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-10T10:36:23.652Z",
               "EditorCaption": ""

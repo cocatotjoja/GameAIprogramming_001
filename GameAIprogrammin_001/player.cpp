@@ -2,25 +2,46 @@
 
 void Player::Update()
 {
-    if (IsKeyDown(KEY_RIGHT))
+    if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT))
     {
-        position.x += 3;
+        velocity.x = 3;
     }
-    else if (IsKeyDown(KEY_LEFT))
+    else if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT))
     {
-        position.x -= 3;
+        velocity.x = -3;
     }
-    else if (IsKeyDown(KEY_UP))
+    else
     {
-        position.y -= 3;
+        velocity.x = 0;
     }
-    else if (IsKeyDown(KEY_DOWN))
+
+    if (IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN))
     {
-        position.y += 3;
+        velocity.y = -3;
     }
+    else if (IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_UP))
+    {
+        velocity.y = 3;
+    }
+    else
+    {
+        velocity.y = 0;
+    }
+
+    position += velocity;
 }
 
 void Player::Draw(Color color)
 {
     DrawCircle(position.x, position.y, 20, color);
+}
+
+Vector2 Player::GetPosition()
+{
+    return position;
+}
+
+Vector2 Player::GetVelocity()
+{
+    return velocity;
 }

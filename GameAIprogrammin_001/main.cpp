@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "player.h"
+#include "agent.h"
 
 int main()
 {
@@ -13,20 +14,25 @@ int main()
     SetTargetFPS(60);
 
     Player player;
+    Agent agent1(Vector2 {200, 200}, Vector2 {0 , 0});
+    //Agent agent2(Vector2 {600, 600}, Vector2 {0 , 0});
 
 
     //Game Loop
     while (WindowShouldClose() == false)
     {
-        // 1. Event Handling
+        // Updating
+        agent1.CheckState();
         player.Update();
+        agent1.Update(player.GetPosition(),player.GetVelocity());
+        //agent2.Update(player.GetPosition(),player.GetVelocity());
 
-        // 2. Updating Positions
-
-        // 3. Drawing
+        // Drawing
         BeginDrawing();
         ClearBackground(brown);
         player.Draw(burgundy);
+        agent1.Draw(green);
+        //agent2.Draw(green);
 
         EndDrawing();
     }
