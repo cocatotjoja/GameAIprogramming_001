@@ -9,6 +9,7 @@ private:
 	Vector2 position;
 	Vector2 velocity;
 	Vector2 chase;
+	Color color = { 176, 190, 162, 255 };
 	float maxSpeed;
 	int state;
 
@@ -24,6 +25,6 @@ public:
 	//~Agent();
 	void CheckState();
 	void Update(Vector2 target, Vector2 targetVel);
-	void Draw(Color color);
+	void Draw();
 
 };

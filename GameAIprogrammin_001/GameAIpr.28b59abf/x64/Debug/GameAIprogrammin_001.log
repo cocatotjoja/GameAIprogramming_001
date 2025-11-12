@@ -3,6 +3,5 @@ C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_
 C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(76,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(77,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(77,18): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  main.cpp
-  Generating Code...
+C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(149,21): warning C4305: 'initializing': truncation from 'double' to 'float'
   GameAIprogrammin_001.vcxproj -> C:\Users\larcat-4-local\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\x64\Debug\GameAIprogrammin_001.exe

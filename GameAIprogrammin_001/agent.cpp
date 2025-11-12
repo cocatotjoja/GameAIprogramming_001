@@ -71,7 +71,7 @@ void Agent::Update(Vector2 targetPos, Vector2 targetVel)
 	position += velocity * GetFrameTime();
 }
 
-void Agent::Draw(Color color)
+void Agent::Draw()
 {
 	DrawCircle(position.x, position.y, 20, color);
 	DrawCircle(chase.x, chase.y, 5, color);
@@ -119,12 +119,67 @@ Vector2 Agent::Pursue(Vector2 targetPos, Vector2 targetVel)
 
 Vector2 Agent::Evade(Vector2 targetPos, Vector2 targetVel)
 {
-	return Vector2();
+	float maxTime = 480 * 100;
+	float distance = Vector2Distance(targetPos, position);
+	float time = distance / Vector2Length(velocity);
+
+	// TEST
+	time *= 4;
+	if (time > maxTime)
+	{
+		time = maxTime;
+	}
+	Vector2 target = targetPos + (targetVel * time);
+
+	// Update chase (DEBUG)
+	chase = target;
+
+	return Flee(target);
 }
 
 Vector2 Agent::Arrive(Vector2 targetPos)
 {
-	return Vector2();
+	// Update chase (DEBUG)
+	chase = targetPos;
+
+	float maxAcceleration = 100;
+	float goalSpeed;
+	float targetRadius = 20;
+	float slowRadius = 300;
+	float timeToTarget = 0.1;
+	Vector2 direction = targetPos - position;
+	float distance = Vector2Length(direction);
+
+	// Are we there yet?
+	if (distance < targetRadius)
+	{
+		return Vector2Negate(velocity);
+		color = { 111, 50, 60, 255 };
+	}
+
+	// If it's far, move fast
+	if (distance > targetRadius)
+	{
+		goalSpeed = maxSpeed;
+	}
+	else
+	{
+		goalSpeed = maxSpeed * distance / slowRadius;
+	}
+
+	// Calculate goal velocity
+	Vector2 result = Vector2Normalize(direction);
+	result *= goalSpeed;
+
+	//Take current velocity into account
+	result -= velocity;
+	result /= timeToTarget;
+
+	//give max acceleration
+	result = Vector2Normalize(result) * maxAcceleration;
+
+
+	return result;
 }
 
 Vector2 Agent::Wander(Vector2 targetPos)

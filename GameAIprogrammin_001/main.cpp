@@ -31,7 +31,7 @@ int main()
         BeginDrawing();
         ClearBackground(brown);
         player.Draw(burgundy);
-        agent1.Draw(green);
+        agent1.Draw();
         //agent2.Draw(green);
 
         EndDrawing();
