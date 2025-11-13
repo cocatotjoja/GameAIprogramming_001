@@ -1,6 +1,16 @@
 #include "agent.h"
 
 
+Agent::Agent()
+{
+	position = Vector2{ (float)GetRandomValue(40, 700), (float)GetRandomValue(40, 700) };
+	velocity = Vector2{ 0 , 0 };
+	maxAcceleration = 200;
+	wanderAngle = 0;
+	chase = Vector2{ 0 , 0 };
+	maxSpeed = 100;
+	state = 1;
+}
 void Agent::CheckState()
 {
 	if (IsKeyDown(KEY_ONE))
@@ -35,7 +45,7 @@ void Agent::CheckState()
 	}
 }
 
-void Agent::Update(Vector2 targetPos, Vector2 targetVel)
+void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent[], Wall[])
 {
 	// Update Velocity
 	switch (state)
@@ -56,7 +66,7 @@ void Agent::Update(Vector2 targetPos, Vector2 targetVel)
 			velocity += Arrive(targetPos) * GetFrameTime();
 			break;
 		case 6:
-			velocity += Wander(targetPos) * GetFrameTime();
+			velocity += Wander() * GetFrameTime();
 			break;
 		default:
 			break;
@@ -84,6 +94,11 @@ Vector2 Agent::Seek(Vector2 targetPos)
 
 	// Calculate velocity
 	Vector2 result = targetPos - position;
+
+	//give max acceleration
+	result = Vector2Normalize(result) * maxAcceleration;
+
+
 	return result;
 }
 
@@ -94,6 +109,11 @@ Vector2 Agent::Flee(Vector2 targetPos)
 
 	// Calculate velocity
 	Vector2 result = position - targetPos;
+
+	//give max acceleration
+	result = Vector2Normalize(result) * maxAcceleration;
+
+
 	return result;
 }
 
@@ -142,7 +162,6 @@ Vector2 Agent::Arrive(Vector2 targetPos)
 	// Update chase (DEBUG)
 	chase = targetPos;
 
-	float maxAcceleration = 100;
 	float goalSpeed;
 	float targetRadius = 20;
 	float slowRadius = 300;
@@ -154,7 +173,6 @@ Vector2 Agent::Arrive(Vector2 targetPos)
 	if (distance < targetRadius)
 	{
 		return Vector2Negate(velocity);
-		color = { 111, 50, 60, 255 };
 	}
 
 	// If it's far, move fast
@@ -182,7 +200,31 @@ Vector2 Agent::Arrive(Vector2 targetPos)
 	return result;
 }
 
-Vector2 Agent::Wander(Vector2 targetPos)
+Vector2 Agent::Wander()
 {
-	return Vector2();
+	/*
+	int time = static_cast<int>(std::round(GetTime()));
+	if (time % 10 == 0)
+	{
+	}
+	*/
+	float wanderOffset = 200;
+	float wanderRadius = wanderOffset/2;
+	float wanderRate = 0.1;
+	int randomOffset = GetRandomValue(-10, 10);
+	Vector2 velocityNormalized = Vector2Normalize(velocity);
+	if (randomOffset != 0)
+	{
+		randomOffset /= abs(randomOffset);
+	}
+
+	wanderAngle += randomOffset * wanderRate;
+	Vector2 wanderTarget = Vector2Rotate(velocityNormalized, wanderAngle);
+
+	Vector2 target = position + (velocityNormalized * wanderOffset);
+	target += wanderTarget * wanderRadius;
+
+
+	return Seek(target);
 }
+
