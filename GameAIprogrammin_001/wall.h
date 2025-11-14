@@ -12,4 +12,7 @@ public:
 	Wall();
 	Wall(Vector2 position, Vector2 wallAngle) : positionS(position), angle(wallAngle), positionE(positionS + wallAngle) {};
 	void Draw(Color color);
+	Vector2 GetStart();
+	Vector2 GetEnd();
+	Vector2 GetVector();
 };

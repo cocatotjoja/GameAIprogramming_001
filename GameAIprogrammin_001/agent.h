@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <array>
 #include "raylib.h"
 #include "raymath.h"
 #include "wall.h"
@@ -22,12 +23,12 @@ private:
 	Vector2 Evade(Vector2 targetPos, Vector2 targetVel);
 	Vector2 Arrive(Vector2 targetPos);
 	Vector2 Wander();
+	Vector2 WallCollision(Wall wall);
 
 public:
 	Agent();
 	Agent(Vector2 position, Vector2 velocity) : position(position), velocity(velocity), maxAcceleration(200), wanderAngle(0), chase(Vector2{0 , 0}), maxSpeed(100), state(1) {};
-	//~Agent();
 	void CheckState();
-	void Update(Vector2 target, Vector2 targetVel, Agent[], Wall[]);
+	void Update(Vector2 target, Vector2 targetVel, Agent agents[], Wall walls[]);
 	void Draw();
 };
