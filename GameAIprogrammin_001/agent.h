@@ -16,6 +16,11 @@ private:
 	Color color = { 176, 190, 162, 255 };
 	float maxSpeed;
 	int state;
+	int timePassed = 0;
+
+	bool frontCollision = false;
+	bool rightCollision = false;
+	bool leftCollision = false;
 
 	Vector2 Seek(Vector2 targetPos);
 	Vector2 Flee(Vector2 targetPos);

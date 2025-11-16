@@ -5,7 +5,7 @@
 class Player
 {
 private:
-	Vector2 position{400, 400};
+	Vector2 position{600, 600};
 	Vector2 velocity{ 0, 0 };
 public:
 	void Update();

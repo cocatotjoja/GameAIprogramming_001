@@ -78,10 +78,21 @@ void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent agents[], Wall wa
 	}
 
 	// Check wall collisions
+	
 	for (int i = 0; i < 4; i++)
 	{
-		Vector2 collision = WallCollision(walls[i]);
+		velocity += WallCollision(walls[i]) * GetFrameTime();
 	}
+	
+
+	/*velocity += WallCollision(walls[0]) * GetFrameTime();
+	velocity += WallCollision(walls[1]) * GetFrameTime();
+	velocity += WallCollision(walls[2]) * GetFrameTime();
+	velocity += WallCollision(walls[3]) * GetFrameTime();*/
+
+
+
+
 
 	// Update position
 	position += velocity * GetFrameTime();
@@ -91,6 +102,24 @@ void Agent::Draw()
 {
 	DrawCircle(position.x, position.y, 20, color);
 	DrawCircle(chase.x, chase.y, 5, color);
+	Vector2 raycastFend = position + (Vector2Normalize(velocity) * maxSpeed * 2);
+	Vector2 raycastRend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, -0.6));
+	Vector2 raycastLend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, 0.6));
+	DrawLine(position.x, position.y, raycastFend.x, raycastFend.y, Color{ 111, 50, 60, 255 });
+	DrawLine(position.x, position.y, raycastRend.x, raycastRend.y, Color{ 111, 50, 60, 255 });
+	DrawLine(position.x, position.y, raycastLend.x, raycastLend.y, Color{ 111, 50, 60, 255 });
+	if (frontCollision)
+	{
+		DrawCircle(raycastFend.x, raycastFend.y, 5, color);
+	}
+	if (rightCollision)
+	{
+		DrawCircle(raycastRend.x, raycastRend.y, 5, color);
+	}
+	if (leftCollision)
+	{
+		DrawCircle(raycastLend.x, raycastLend.y, 5, color);
+	}
 }
 
 Vector2 Agent::Seek(Vector2 targetPos)
@@ -230,33 +259,53 @@ Vector2 Agent::Wander()
 
 Vector2 Agent::WallCollision(Wall wall)
 {
-	Vector2 raycastEnd = position + (velocity * 10);
-	Vector2 collisionPoint{ 0,0 };
+	Vector2 raycastFend = position + (Vector2Normalize(velocity) * maxSpeed * 2);
+	Vector2 raycastRend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, -0.6));
+	Vector2 raycastLend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, 0.6));
+	Vector2 collisionPointF{ 0,0 };
+	Vector2 collisionPointR{ 0,0 };
+	Vector2 collisionPointL{ 0,0 };
 	Vector2 collisionNormal{ 0,0 };
+	Vector2 collision;
+	Vector2 wallVector = wall.GetVector();
 
-	// Check for collision
-	bool colliding = CheckCollisionLines(position, raycastEnd, wall.GetStart(), wall.GetEnd(), &collisionPoint);
-
-	//If there is a collision, calculate the collsion normal
-	if (colliding)
+	if (timePassed == 1)
 	{
+		// Check for collision FRONT
+		frontCollision = CheckCollisionLines(position, raycastFend, wall.GetStart(), wall.GetEnd(), &collisionPointF);
+		// Check for collision RIGHT
+		rightCollision = CheckCollisionLines(position, raycastRend, wall.GetStart(), wall.GetEnd(), &collisionPointR);
+		// Check for collision LEFT
+		leftCollision = CheckCollisionLines(position, raycastLend, wall.GetStart(), wall.GetEnd(), &collisionPointL);
+		timePassed = 0;
+	}
+	timePassed += 1;
+
+
+
+	//If there is a collision, calculate the collsion normal, return vector zero if no collision
+	if (frontCollision || rightCollision || leftCollision)
+	{
+		color = { 111, 50, 60, 255 };
 		// Test which direction the collision normal is going, and return the correct one
-		Vector2 wallVector = wall.GetVector();
-		float angle = Vector2Angle(velocity * 10, Vector2{ -wallVector.y, wallVector.x });
+		float angle = Vector2Angle(velocity, Vector2{ -wallVector.y, wallVector.x });
 		float angleDeg = angle * (180.0 / 3.141592653589793238463);
 		if (angleDeg < 90.0)
 		{
-			return Vector2{ -wallVector.y, wallVector.x };
+			collision = Seek(Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * 50);
 		}
 		else
 		{
-			return Vector2{ wallVector.y, -wallVector.x };
+			collision = Seek(Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * 50);
 		}
 	}
-	// If there was no collision return a Vector zero 
 	else
 	{
-		return Vector2{ 0,0 };
+		color = { 176, 190, 162, 255 };
+		collision = { 0,0 };
 	}
+
+	
+	return collision;
 }
 
