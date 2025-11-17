@@ -2,6 +2,7 @@
 #include "player.h"
 #include "agent.h"
 #include "wall.h"
+#include "obstacle.h"
 
 int main()
 {
@@ -11,15 +12,22 @@ int main()
     Color burgundy = { 111, 50, 60, 255 };
 
     //Window size
-    int width = 1200;
-    int height = 1200;
+    float width = 1200;
+    float height = 1200;
+    float margin = 200;
 
     // Create Wall array
     Wall walls[4];
-    walls[0] = Wall(Vector2{ 200, 200 }, Vector2{ (float)width - 400, 0 });
-    walls[1] = Wall(Vector2{ 200, 200 }, Vector2{ 0, (float)height - 400 });
-    walls[2] = Wall(Vector2{ (float)width - 200, 200 }, Vector2{ 0, (float)height - 400 });
-    walls[3] = Wall(Vector2{ 200, (float)height - 200 }, Vector2{ (float)width - 400, 0 });
+    walls[0] = Wall(Vector2{ margin, margin }, Vector2{ width - (margin*2), 0 });
+    walls[1] = Wall(Vector2{ margin, height - margin }, Vector2{ 0, -(height - (margin * 2)) });
+    walls[2] = Wall(Vector2{ width - margin, margin }, Vector2{ 0, height - (margin * 2) });
+    walls[3] = Wall(Vector2{ margin, height - margin }, Vector2{ width - (margin * 2), 0 });
+
+    // Create Obstacle array
+    Obstacle obstacles[3];
+    obstacles[0] = Obstacle(Vector2{ 300, 600 }, 25);
+    obstacles[1] = Obstacle(Vector2{ 600, 400 }, 30);
+    obstacles[2] = Obstacle(Vector2{ 700, 600 }, 40);
     
     // Create Player (controlled with arrow keys)
     Player player;
@@ -40,15 +48,24 @@ int main()
         // Updating
         player.Update();
         agent.CheckState();
-        agent.Update(player.GetPosition(),player.GetVelocity(), agents, walls);
+        agent.Update(player.GetPosition(),player.GetVelocity(), agents, walls, obstacles);
 
         // Drawing
         BeginDrawing();
         ClearBackground(brown);
+
+        // Draw walls
         for (int i = 0; i < 4; i++)
         {
             walls[i].Draw(burgundy);
         }
+
+        // Draw obstacles
+        for (int i = 0; i < 3; i++)
+        {
+            obstacles[i].Draw(burgundy);
+        }
+
         player.Draw(burgundy);
         agent.Draw();
 

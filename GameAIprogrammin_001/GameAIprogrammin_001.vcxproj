@@ -128,11 +128,13 @@
   <ItemGroup>
     <ClCompile Include="agent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="obstacle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h" />
+    <ClInclude Include="obstacle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="wall.h" />
   </ItemGroup>
