@@ -10,6 +10,7 @@ private:
 	Vector2 angle;
 public:
 	Wall();
+	Wall(float width, float height, float margin);
 	Wall(Vector2 position, Vector2 wallAngle) : positionS(position), angle(wallAngle), positionE(positionS + wallAngle) {};
 	void Draw(Color color);
 	Vector2 GetStart();
