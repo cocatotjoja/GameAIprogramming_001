@@ -1,7 +1,16 @@
-﻿  main.cpp
-C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\main.cpp(20,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\main.cpp(20,16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\main.cpp(50,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\main.cpp(50,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\main.cpp(50,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+﻿  agent.cpp
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(18,57): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(18,44): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(18,103): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(18,89): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(147,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(147,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(241,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(282,20): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(342,89): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(343,89): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(366,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(380,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\agent.cpp(394,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GameAIprogrammin_001.vcxproj -> C:\Users\cocat\Documents\GitHub\GameAIprogramming_001\GameAIprogrammin_001\x64\Debug\GameAIprogrammin_001.exe

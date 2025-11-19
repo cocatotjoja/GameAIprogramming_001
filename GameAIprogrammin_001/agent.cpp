@@ -13,7 +13,7 @@ Agent::Agent()
 	state = 6;
 	ID = 0;
 }
-Agent::Agent(int id, int width, int height, int margin)
+Agent::Agent(int id, float width, float height, float margin)
 {
 	position = Vector2{ (float)GetRandomValue(margin, width-margin), (float)GetRandomValue(margin, height-margin) };
 	velocity = Vector2Normalize(Vector2{ (float)GetRandomValue(40, 700), (float)GetRandomValue(40, 700) });
@@ -32,87 +32,108 @@ void Agent::CheckState()
 	{
 		// Seek
 		state = 1;
+		pathTarget = 8;
 	}
 	if (IsKeyDown(KEY_TWO))
 	{
 		// Flee
 		state = 2;
+		pathTarget = 8;
 	}
 	if (IsKeyDown(KEY_THREE))
 	{
 		// Pursue
 		state = 3;
+		pathTarget = 8;
 	}
 	if (IsKeyDown(KEY_FOUR))
 	{
 		// Evade
 		state = 4;
+		pathTarget = 8;
 	}
 	if (IsKeyDown(KEY_FIVE))
 	{
 		// Arrive
 		state = 5;
+		pathTarget = 8;
 	}
 	if (IsKeyDown(KEY_SIX))
 	{
 		// Wander
 		state = 6;
+		pathTarget = 8;
+	}
+	if (IsKeyDown(KEY_SEVEN))
+	{
+		// Wander
+		state = 7;
 	}
 }
 
-void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent agents[], Wall walls[], Obstacle obstacles[], float width, float height)
+void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent agents[], Wall walls[], Obstacle obstacles[], Vector2 path[], float width, float height)
 {
+	if ( timePassed >= 10)
+	{
+		timePassed = 0;
+	}
+	timePassed++;
+
 	// Update Velocity
 	switch (state)
 	{
-		case 1:
-			velocity += Seek(targetPos) * GetFrameTime();
-			break;
-		case 2:
-			velocity += Flee(targetPos) * GetFrameTime();
-			break;
-		case 3:
-			velocity += Pursue(targetPos, targetVel) * GetFrameTime();
-			break;
-		case 4:
-			velocity += Evade(targetPos, targetVel) * GetFrameTime();
-			break;
-		case 5:
-			velocity += Arrive(targetPos) * GetFrameTime();
-			break;
-		case 6:
-			velocity += Wander() * GetFrameTime();
-			break;
-		default:
-			break;
+	case 1:
+		velocity += Seek(targetPos) * GetFrameTime();
+		break;
+	case 2:
+		velocity += Flee(targetPos) * GetFrameTime();
+		break;
+	case 3:
+		velocity += Pursue(targetPos, targetVel) * GetFrameTime();
+		break;
+	case 4:
+		velocity += Evade(targetPos, targetVel) * GetFrameTime();
+		break;
+	case 5:
+		velocity += Arrive(targetPos) * GetFrameTime();
+		break;
+	case 6:
+		velocity += Wander() * GetFrameTime();
+		break;
+	case 7:
+		velocity += Path(path) * GetFrameTime();
+	default:
+		break;
 	}
-	if (Vector2Length(velocity) > maxSpeed)
-	{
-		velocity = Vector2Normalize(velocity);
-		velocity *= maxSpeed;
-	}
+
 
 	// Check wall collisions
 	for (int i = 0; i < 3; i++)
-	{
-		velocity += WallCollision(walls[i]) * GetFrameTime();
-	}
+		{
+			velocity += WallCollision(walls[i]) * GetFrameTime();
+		}
 
 	// Check obstacle collisions
 	for (int i = 0; i < 3; i++)
-	{
-		velocity += ObstacleCollision(obstacles[i].GetPosition(), obstacles[i].GetRadius()) * GetFrameTime();
-	}
+		{
+			velocity += ObstacleCollision(obstacles[i].GetPosition(), obstacles[i].GetRadius()) * GetFrameTime();
+		}
 
 	// Check agent collisions
 	for (int i = 0; i < 5; i++)
-	{
-		if (agents[i].GetID() != ID)
 		{
-			velocity += AgentCollision(agents[i]) * GetFrameTime();
+			if (agents[i].GetID() != ID)
+			{
+				velocity += AgentCollision(agents[i]) * GetFrameTime();
+			}
 		}
-	}
 
+
+	if (Vector2Length(velocity) > maxSpeed)
+		{
+			velocity = Vector2Normalize(velocity);
+			velocity *= maxSpeed;
+		}
 
 	// Update position
 	position += velocity * GetFrameTime();
@@ -126,29 +147,16 @@ void Agent::Draw()
 	DrawCircle(position.x, position.y, radius, color);
 
 	// DEBUG target to seek/flee
-	DrawCircle(chase.x, chase.y, 5, color);
+	//DrawCircle(chase.x, chase.y, 5, color);
 
+	/*
 	// DEBUG Raycasting
 	Vector2 raycastFend = position + (Vector2Normalize(velocity) * maxSpeed * 2);
 	Vector2 raycastRend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, -0.6));
 	Vector2 raycastLend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, 0.6));
 	DrawLine(position.x, position.y, raycastFend.x, raycastFend.y, Color{ 111, 50, 60, 255 });
-	//DrawLine(position.x, position.y, raycastRend.x, raycastRend.y, Color{ 111, 50, 60, 255 });
-	//DrawLine(position.x, position.y, raycastLend.x, raycastLend.y, Color{ 111, 50, 60, 255 });
-	
-	/*
-	if (frontCollision)
-	{
-		DrawCircle(raycastFend.x, raycastFend.y, 5, color);
-	}
-	if (rightCollision)
-	{
-		DrawCircle(raycastRend.x, raycastRend.y, 5, color);
-	}
-	if (leftCollision)
-	{
-		DrawCircle(raycastLend.x, raycastLend.y, 5, color);
-	}
+	DrawLine(position.x, position.y, raycastRend.x, raycastRend.y, Color{ 111, 50, 60, 255 });
+	DrawLine(position.x, position.y, raycastLend.x, raycastLend.y, Color{ 111, 50, 60, 255 });
 	*/
 }
 
@@ -267,52 +275,119 @@ Vector2 Agent::Arrive(Vector2 targetPos)
 
 Vector2 Agent::Wander()
 {
-	float wanderOffset = 200;
-	float wanderRadius = wanderOffset/2;
-	float wanderRate = 0.1;
-	int randomOffset = GetRandomValue(-10, 10);
-	Vector2 velocityNormalized = Vector2Normalize(velocity);
-	if (randomOffset != 0)
+	if (timePassed >= 10)
 	{
-		randomOffset /= abs(randomOffset);
+		float wanderOffset = 200;
+		float wanderRadius = wanderOffset/2;
+		float wanderRate = 0.1;
+		int randomOffset = GetRandomValue(-10, 10);
+		Vector2 velocityNormalized = Vector2Normalize(velocity);
+		if (randomOffset != 0)
+		{
+			randomOffset /= abs(randomOffset);
+		}
+
+		wanderAngle += randomOffset * wanderRate;
+		Vector2 wanderTarget = Vector2Rotate(velocityNormalized, wanderAngle);
+
+		Vector2 target = position + (velocityNormalized * wanderOffset);
+		target += wanderTarget * wanderRadius;
+
+
+		return Seek(target);
+	}
+	else
+	{
+		return Vector2{ 0,0 };
+	}
+}
+
+Vector2 Agent::Path(Vector2 path[])
+{
+	if (pathTarget > 7)
+	{
+		float closestDist = Vector2Distance(position, path[0]);
+		int closestID = 0;
+		//Find closest path point
+		for (int i = 1; i < 8; i++)
+		{
+			float thisDist = Vector2Distance(position, path[i]);
+			if (thisDist < closestDist)
+			{
+				closestDist = thisDist;
+				closestID = i;
+			}
+		}
+		pathTarget = closestID;
+	}
+	else
+	{
+		// If pathTarget reached update target
+		if (Vector2Distance(position, path[pathTarget]) < (radius * 4))
+		{
+			pathTarget++;
+		}
+		else if (pathTarget > 7)
+		{
+			pathTarget = 0;
+		}
 	}
 
-	wanderAngle += randomOffset * wanderRate;
-	Vector2 wanderTarget = Vector2Rotate(velocityNormalized, wanderAngle);
-
-	Vector2 target = position + (velocityNormalized * wanderOffset);
-	target += wanderTarget * wanderRadius;
-
-
-	return Seek(target);
+	return Seek(path[pathTarget]);
 }
 
 Vector2 Agent::WallCollision(Wall wall)
 {
 	Vector2 raycastFend = position + (Vector2Normalize(velocity) * maxSpeed * 2);
+	Vector2 raycastRend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, -0.6));
+	Vector2 raycastLend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, 0.6));
 	Vector2 collisionPointF{ 0,0 };
+	Vector2 collisionPointR{ 0,0 };
+	Vector2 collisionPointL{ 0,0 };
 	Vector2 collisionNormal{ 0,0 };
 	Vector2 collision;
 	Vector2 wallVector = wall.GetVector();
 
 	// Check for collision FRONT
 	frontCollision = CheckCollisionLines(position, raycastFend, wall.GetStart(), wall.GetEnd(), &collisionPointF);
-	
-	/*
-	Vector2 raycastRend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, -0.6));
-	Vector2 raycastLend = position + (Vector2Rotate(Vector2Normalize(velocity) * maxSpeed, 0.6));
-	Vector2 collisionPointR{ 0,0 };
-	Vector2 collisionPointL{ 0,0 };
 	// Check for collision RIGHT
 	rightCollision = CheckCollisionLines(position, raycastRend, wall.GetStart(), wall.GetEnd(), &collisionPointR);
 	// Check for collision LEFT
 	leftCollision = CheckCollisionLines(position, raycastLend, wall.GetStart(), wall.GetEnd(), &collisionPointL);
-	*/
+	
 
 
 
 	//If there is a collision, calculate the collsion normal, return vector zero if no collision
 	if (frontCollision)
+	{
+		// Test which direction the collision normal is going, and return the correct one
+		float angle = Vector2Angle(velocity, Vector2{ -wallVector.y, wallVector.x });
+		float angleDeg = angle * (180.0 / 3.141592653589793238463);
+		if (angleDeg > 90.0)
+		{
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * 100));
+		}
+		else
+		{
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * 100));
+		}
+	}
+	else if (rightCollision)
+	{
+		// Test which direction the collision normal is going, and return the correct one
+		float angle = Vector2Angle(velocity, Vector2{ -wallVector.y, wallVector.x });
+		float angleDeg = angle * (180.0 / 3.141592653589793238463);
+		if (angleDeg > 90.0)
+		{
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * 100));
+		}
+		else
+		{
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * 100));
+		}
+	}
+	else if (leftCollision)
 	{
 		// Test which direction the collision normal is going, and return the correct one
 		float angle = Vector2Angle(velocity, Vector2{ -wallVector.y, wallVector.x });
