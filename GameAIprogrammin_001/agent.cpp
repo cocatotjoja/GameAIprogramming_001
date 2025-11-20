@@ -6,7 +6,6 @@ Agent::Agent()
 	position = Vector2{ (float)GetRandomValue(40, 700), (float)GetRandomValue(40, 700) };
 	velocity = Vector2{ 0 , 0 };
 	radius = 10;
-	maxAcceleration = 200;
 	wanderAngle = 0;
 	chase = Vector2{ 0 , 0 };
 	maxSpeed = 100;
@@ -17,8 +16,11 @@ Agent::Agent(int id, float width, float height, float margin)
 {
 	position = Vector2{ (float)GetRandomValue(margin, width-margin), (float)GetRandomValue(margin, height-margin) };
 	velocity = Vector2Normalize(Vector2{ (float)GetRandomValue(-1, 1), (float)GetRandomValue(-1, 1) }) * 100;
+	if (velocity == Vector2{ 0, 0 })
+	{
+		velocity = { 1,1 };
+	}
 	radius = 10;
-	maxAcceleration = 200;
 	wanderAngle = 0;
 	chase = Vector2{ 0 , 0 };
 	maxSpeed = 100;
@@ -128,8 +130,8 @@ void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent agents[], Wall wa
 			}
 		}
 
-	// Agent repulsion
-	velocity += Separation(agents) * GetFrameTime();
+	// Agent separation
+	//velocity += Separation(agents) * GetFrameTime();
 
 
 	if (Vector2Length(velocity) > maxSpeed)
@@ -369,11 +371,11 @@ Vector2 Agent::WallCollision(Wall wall)
 		float angleDeg = angle * (180.0 / 3.141592653589793238463);
 		if (angleDeg > 90.0)
 		{
-			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * 100));
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * maxAcceleration));
 		}
 		else
 		{
-			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * 100));
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * maxAcceleration));
 		}
 	}
 	else if (rightCollision)
@@ -383,11 +385,11 @@ Vector2 Agent::WallCollision(Wall wall)
 		float angleDeg = angle * (180.0 / 3.141592653589793238463);
 		if (angleDeg > 90.0)
 		{
-			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * 100));
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * maxAcceleration));
 		}
 		else
 		{
-			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * 100));
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * maxAcceleration));
 		}
 	}
 	else if (leftCollision)
@@ -397,11 +399,11 @@ Vector2 Agent::WallCollision(Wall wall)
 		float angleDeg = angle * (180.0 / 3.141592653589793238463);
 		if (angleDeg > 90.0)
 		{
-			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * 100));
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ -wallVector.y, wallVector.x }) * maxAcceleration));
 		}
 		else
 		{
-			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * 100));
+			collision = Seek(collisionPointF + (Vector2Normalize(Vector2{ wallVector.y, -wallVector.x }) * maxAcceleration));
 		}
 	}
 	else
@@ -443,7 +445,7 @@ Vector2 Agent::Separation(Agent agents[])
 {
 	Vector2 result = { 0,0 };
 	float minDist = radius * 4;
-	float decay = 3;
+	float decay = 4;
 	// Loop through all agents
 	for (int i = 0; i < 15; i++)
 	{

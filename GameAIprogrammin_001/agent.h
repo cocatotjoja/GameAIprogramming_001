@@ -12,7 +12,7 @@ private:
 	Vector2 position;
 	Vector2 velocity;
 	float radius;
-	float maxAcceleration;
+	float maxAcceleration = 400;
 	float wanderAngle;
 	Vector2 chase;
 	Color color = { 176, 190, 162, 255 };
@@ -42,7 +42,7 @@ private:
 public:
 	Agent();
 	Agent(int id, float width, float height, float margin);
-	Agent(Vector2 position, Vector2 velocity, int ID) : position(position), velocity(velocity), radius(10), maxAcceleration(200), wanderAngle(0), chase(Vector2{0 , 0}), maxSpeed(100), state(6), ID(ID) {};
+	Agent(Vector2 position, Vector2 velocity, int ID) : position(position), velocity(velocity), radius(10), wanderAngle(0), chase(Vector2{0 , 0}), maxSpeed(100), state(6), ID(ID) {};
 	void CheckState();
 	void Update(Vector2 target, Vector2 targetVel, Agent agents[], Wall walls[], Obstacle obstacles[], Vector2 path[], float width, float height);
 	void Draw();
