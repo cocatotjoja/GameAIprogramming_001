@@ -7,7 +7,10 @@
 ---
 
 ### Using the program
-An executable can be found in 
+An executable can be found in; GameAIprogramming_001/GameAIprogrammin_001/x64/Debug/
+Project was made and built in Visual Studio 2022 on a Windows 11 computer, and there might be issues opening the executable on a Mac (I couldn't test it since I don't have a Mac)
+
+
 To shift between different states for the Ai agents the user can press the numbers on the keyboard;
 1. Seek
 2. Flee
