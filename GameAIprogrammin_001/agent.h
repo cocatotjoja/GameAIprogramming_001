@@ -36,12 +36,13 @@ private:
 	Vector2 WallCollision(Wall wall);
 	Vector2 ObstacleCollision(Vector2 obstaclePositon, float ObstacleRadius);
 	Vector2 AgentCollision(Agent agent);
+	Vector2 Separation(Agent agents[]);
 	void ScreenWrap(float width, float height);
 
 public:
 	Agent();
 	Agent(int id, float width, float height, float margin);
-	Agent(Vector2 position, Vector2 velocity, int ID) : position(position), velocity(velocity), radius(20), maxAcceleration(200), wanderAngle(0), chase(Vector2{0 , 0}), maxSpeed(100), state(6), ID(ID) {};
+	Agent(Vector2 position, Vector2 velocity, int ID) : position(position), velocity(velocity), radius(10), maxAcceleration(200), wanderAngle(0), chase(Vector2{0 , 0}), maxSpeed(100), state(6), ID(ID) {};
 	void CheckState();
 	void Update(Vector2 target, Vector2 targetVel, Agent agents[], Wall walls[], Obstacle obstacles[], Vector2 path[], float width, float height);
 	void Draw();

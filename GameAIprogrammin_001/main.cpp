@@ -55,8 +55,8 @@ int main()
     Player player;
 
     // Create Agent(s)
-    Agent agents[5];
-    for (int i = 0; i < 5; i++)
+    Agent agents[15];
+    for (int i = 0; i < 15; i++)
     {
         agents[i] = Agent(i, width, height, margin);
     }
@@ -70,7 +70,7 @@ int main()
         player.Update();
 
         // Update agents
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 15; i++)
         {
             agents[i].CheckState();
             agents[i].Update(player.GetPosition(),player.GetVelocity(), agents, walls, obstacles, path, width, height);
@@ -105,7 +105,7 @@ int main()
         player.Draw(burgundy);
 
         // Draw agents
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 15; i++)
         {
             agents[i].Draw();
         }

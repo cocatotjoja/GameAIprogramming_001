@@ -5,7 +5,7 @@ Agent::Agent()
 {
 	position = Vector2{ (float)GetRandomValue(40, 700), (float)GetRandomValue(40, 700) };
 	velocity = Vector2{ 0 , 0 };
-	radius = 20;
+	radius = 10;
 	maxAcceleration = 200;
 	wanderAngle = 0;
 	chase = Vector2{ 0 , 0 };
@@ -16,8 +16,8 @@ Agent::Agent()
 Agent::Agent(int id, float width, float height, float margin)
 {
 	position = Vector2{ (float)GetRandomValue(margin, width-margin), (float)GetRandomValue(margin, height-margin) };
-	velocity = Vector2Normalize(Vector2{ (float)GetRandomValue(40, 700), (float)GetRandomValue(40, 700) });
-	radius = 20;
+	velocity = Vector2Normalize(Vector2{ (float)GetRandomValue(-1, 1), (float)GetRandomValue(-1, 1) }) * 100;
+	radius = 10;
 	maxAcceleration = 200;
 	wanderAngle = 0;
 	chase = Vector2{ 0 , 0 };
@@ -120,13 +120,16 @@ void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent agents[], Wall wa
 		}
 
 	// Check agent collisions
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 15; i++)
 		{
 			if (agents[i].GetID() != ID)
 			{
 				velocity += AgentCollision(agents[i]) * GetFrameTime();
 			}
 		}
+
+	// Agent repulsion
+	velocity += Separation(agents) * GetFrameTime();
 
 
 	if (Vector2Length(velocity) > maxSpeed)
@@ -434,6 +437,32 @@ Vector2 Agent::AgentCollision(Agent agent)
 	Vector2 agentFuture = agent.GetPosition() + (Vector2Normalize(agent.GetVelocity()) * maxSpeed);
 
 	return ObstacleCollision(agentFuture, agent.GetRadius());
+}
+
+Vector2 Agent::Separation(Agent agents[])
+{
+	Vector2 result = { 0,0 };
+	float minDist = radius * 4;
+	float decay = 3;
+	// Loop through all agents
+	for (int i = 0; i < 15; i++)
+	{
+		// Make sure the agent isnt this agent
+		if (ID != i)
+		{
+			//Check if distance is to small
+			Vector2 direction = agents[i].GetPosition() - position;
+			float distance = Vector2Length(direction);
+			
+			if (distance < minDist)
+			{
+				// Calculate repulsion
+				float repulsion = std::min(decay / (distance * distance), maxAcceleration);
+				result += Vector2Normalize(direction) * repulsion;
+			}
+		}
+	}
+	return result;
 }
 
 void Agent::ScreenWrap(float width, float height)
