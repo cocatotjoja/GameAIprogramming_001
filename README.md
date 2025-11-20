@@ -2,7 +2,7 @@
 ### Assignment 1 - Movement
 #### Catja Alicia Larsson
 #### Email: larcat-4@student.ltu.se
-##### November 2025
+##### 20th November 2025
 
 ---
 
