@@ -131,7 +131,7 @@ void Agent::Update(Vector2 targetPos, Vector2 targetVel, Agent agents[], Wall wa
 		}
 
 	// Agent separation
-	//velocity += Separation(agents) * GetFrameTime();
+	velocity += Separation(agents) * GetFrameTime();
 
 
 	if (Vector2Length(velocity) > maxSpeed)
